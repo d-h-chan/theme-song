@@ -3,9 +3,8 @@ const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
 const helmet = require('helmet')
-const fetch = require('node-fetch');
 const geniusRouter = require('./genius/genius-router')
-const JSSoup = require('jssoup').default;
+const databaseRouter = require('./database/database-router')
 const { NODE_ENV } = require('./config')
 
 const app = express()
@@ -19,6 +18,7 @@ app.use(helmet())
 app.use(cors())
 
 app.use('/api/genius', geniusRouter)
+app.use('/api/database', databaseRouter)
 
 app.get('/', (req, res) => {
   /*fetch('https://genius.com/Jesus-culture-how-he-loves-lyrics')

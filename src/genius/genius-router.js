@@ -1,18 +1,7 @@
 const express = require('express')
-const fetch = require('node-fetch');
+const fetch = require('node-fetch')
 const geniusRouter = express.Router()
 
-function processLyrics(input) {
-  input = input.toLowerCase().replace(/(\r\n|\n|\r|,)/gm, " ")
-  let inputArr = input.split(' ')
-  let newSet = new Set(inputArr)
-  let output = ""
-  for (let item of newSet) {
-    output = output.concat(item, " ")
-  }
-  console.log(output)
-  return output
-}
 
 geniusRouter
   .route('/search')
