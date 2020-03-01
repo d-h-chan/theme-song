@@ -87,22 +87,13 @@ databaseRouter
         //console.log(lyrics)
         const song = getSongFromResult(result)
         song.lyrics = lyrics
-        console.log(song)
         DatabaseService.insertSong(knexInstance, song)
       })
       //DatabaseService.insertSong(knexInstance)
     }
-    res.send(results)
-    /*DatabaseService.insertArtists(knexInstance, results.map(getArtistFromResults))
-      .then(r => {
-        res.send(r)
-        Promise.all(results.map(deserializeSong).map(addLyrics))
-        .then(resultArr => {
-          DatabaseService.insertSongs(resultArr)  
-          res.send(resultArr)      
-        })
-      })
-      */
+    res
+    .status(201)
+    .send(results)
   })
 
 databaseRouter
