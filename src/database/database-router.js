@@ -65,11 +65,21 @@ databaseRouter
   .route('/songs')
   .get((req, res, next) => {
     const knexInstance = req.app.get('db')
+    let inputStr = req.query.q
+    if (inputStr === null || inputStr.match(/^ *$/) !== null) {
+      DatabaseService.getAllSongs(knexInstance)
+      .then(songs => {
+        res.json(songs.map(serializeSong))
+      })
+      .catch(next)
+    }
+    else {
     DatabaseService.getSongs(knexInstance, req.query.q)
       .then(songs => {
         res.json(songs.map(serializeSong))
       })
       .catch(next)
+    }
   })
   //
   .post(jsonParser, (req, res, next) => {

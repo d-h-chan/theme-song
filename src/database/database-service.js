@@ -6,6 +6,11 @@ const DatabaseService = {
       .where('lyrics', 'like', `%${search}%`)
       .orWhere('themes', 'like', `%${search}%`)
   },
+  getAllSongs(knex) {
+    return knex.select('*')
+      .from('songs')
+      .orderBy('title', 'desc')
+  },
   insertSong(knex, songs) {
     return knex.insert(songs)
       .into('songs')
