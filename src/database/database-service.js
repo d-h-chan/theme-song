@@ -9,6 +9,7 @@ const DatabaseService = {
   getAllSongs(knex) {
     return knex.select('*')
       .from('songs')
+      .innerJoin('artists', 'songs.artist_id', 'artists.genius_id')
       .orderBy('title', 'desc')
   },
   insertSong(knex, songs) {
