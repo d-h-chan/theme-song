@@ -27,6 +27,7 @@ const DatabaseService = {
   getArtists(knex) {
     return knex.select('*')
       .from('artists')
+      .orderBy('title', 'asc')
   },
   insertArtist(knex, artists) {
     return knex.insert(artists)
