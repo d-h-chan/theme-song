@@ -10,7 +10,7 @@ const DatabaseService = {
     return knex.select('*')
       .from('songs')
       .innerJoin('artists', 'songs.artist_id', 'artists.genius_id')
-      .orderBy('title', 'desc')
+      .orderBy('title', 'asc')
   },
   insertSong(knex, songs) {
     return knex.insert(songs)
