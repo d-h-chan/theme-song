@@ -5,6 +5,7 @@ const DatabaseService = {
       .innerJoin('artists', 'songs.artist_id', 'artists.genius_id')
       .where('lyrics', 'like', `%${search}%`)
       .orWhere('themes', 'like', `%${search}%`)
+      .orderBy('title', 'asc')
   },
   getAllSongs(knex) {
     return knex.select('*')
@@ -40,7 +41,6 @@ const DatabaseService = {
         if (!isUniqueViolationError(x)) throw x
         return artists
       })
-      
   },
 }
 
