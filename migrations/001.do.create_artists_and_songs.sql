@@ -13,6 +13,6 @@ CREATE TABLE songs (
     lyrics TEXT NOT NULL,
     genius_id INTEGER NOT NULL,
     artist_id INTEGER NOT NULL,
-    FOREIGN KEY (artist_id) REFERENCES artists (genius_id) ON DELETE CASCADE,
+    FOREIGN KEY (artist_id) REFERENCES artists (genius_id),
     CONSTRAINT song_genius_id_unique UNIQUE (genius_id)
 );
