@@ -25,6 +25,12 @@ const DatabaseService = {
         return songs
       })
   },
+  serializeArtist(artist) {
+    return {
+      name: artist.artist_name,
+      id: artist.genius_id,
+    }
+  },
   getArtists(knex) {
     return knex.select('*')
       .from('artists')

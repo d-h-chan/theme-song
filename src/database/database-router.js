@@ -31,12 +31,6 @@ function getArtistFromResult(result) {
     artist_name: result.artist
   };
 }
-
-const serializeArtist = artist => ({
-  name: artist.artist_name,
-  id: artist.genius_id,
-})
-
 function processLyrics(input) {
   input = input.toLowerCase().replace(/(\r\n|\n|\r|,)/gm, " ")
   let inputArr = input.split(' ')
@@ -112,7 +106,7 @@ databaseRouter
     const knexInstance = req.app.get('db')
     DatabaseService.getArtists(knexInstance)
       .then(artists => {
-        res.json(artists.map(serializeArtist))
+        res.json(artists.map(DatabaseService.serializeArtist))
       })
       .catch(next)
   })
