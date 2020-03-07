@@ -1,13 +1,11 @@
 const knex = require('knex')
 const app = require('../src/app')
 const { serializeArtist } = require('../src/database/database-service')
-const helpers = require('./test-helpers')
-
 
 function cleanTables(db) {
   return db.raw(
     'TRUNCATE songs, artists RESTART IDENTITY CASCADE'
-    )
+  )
 }
 
 describe(`database service object`, function () {
@@ -66,8 +64,7 @@ describe(`database service object`, function () {
 
   after(() => db.destroy())
 
-  describe(`Get /api/artists`, () => {
-
+  describe(`Get /api/database/artists`, () => {
     context(`Given there are no artists`, () => {
       before('clean the tables', () => cleanTables(db))
 
@@ -92,5 +89,7 @@ describe(`database service object`, function () {
       })
     })
   })
+
+  
 
 })
