@@ -1,6 +1,13 @@
-# Express Boilerplate!
+## Api Endpoints:
+GET /api/database/songs - return list of all songs in the db, or all songs that match query parameters (e.g. http://localhost:8000/api/database/songs?q=worthy)
 
-This is a boilerplate project used for starting new projects!
+POST /api/database/songs - insert a list of new songs into the db
+
+GET /api/database/artists - return list of all artists in db
+
+GET /api/genius/search - return a list of songs from genius that match the search parameters (uses genius endpoint https://api.genius.com/search?q={parameters})
+
+GET /api/genius/search/:artist_id - returns a list of 30 most popular songs by an artist from genius (uses genius endpoint  https://api.genius.com/artists/${artist_id}/songs?sort=popularity&per_page=30)
 
 ## Set up
 
