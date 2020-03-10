@@ -1,3 +1,5 @@
+const xss = require('xss')
+
 const DatabaseService = {
   getSongs(knex, search) {
     return knex.select('*')
@@ -29,6 +31,14 @@ const DatabaseService = {
     return {
       name: artist.artist_name,
       id: artist.genius_id,
+    }
+  },
+  serializeSong(song) {
+    return {
+      title: song.title,
+      artist: song.artist_name,
+      url: song.song_url,
+      themes: xss(song.themes)
     }
   },
   getArtists(knex) {

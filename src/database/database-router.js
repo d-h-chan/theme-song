@@ -2,18 +2,11 @@ const express = require('express')
 const path = require('path')
 const fetch = require('node-fetch')
 const JSSoup = require('jssoup').default
-const xss = require('xss')
 const DatabaseService = require('./database-service')
 
 const databaseRouter = express.Router()
 const jsonParser = express.json()
 
-const serializeSong = song => ({
-  title: song.title,
-  artist: song.artist_name,
-  url: song.song_url,
-  themes: xss(song.themes)
-})
 
 function getSongFromResult(result) {
   return {
@@ -63,20 +56,20 @@ databaseRouter
     if (inputStr === null || inputStr.match(/^ *$/) !== null) {
       DatabaseService.getAllSongs(knexInstance)
       .then(songs => {
-        res.json(songs.map(serializeSong))
+        res.json(songs.map(DatabaseService.serializeSong))
       })
       .catch(next)
     }
     else {
     DatabaseService.getSongs(knexInstance, req.query.q)
       .then(songs => {
-        res.json(songs.map(serializeSong))
+        res.json(songs.map(DatabaseService.serializeSong))
       })
       .catch(next)
     }
   })
   //
-  .post(jsonParser, (req, res, next) => {
+  .post(jsonParser, (req, res) => {
     let results = req.body
     const knexInstance = req.app.get('db')
     //res.send(results.map(getArtistFromResults))
