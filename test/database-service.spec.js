@@ -59,8 +59,6 @@ describe(`database service object`, function () {
     }
   ]
 
-  //let serializedTestScores = testScores.map(serializeScore);
-
   before(() => {
     db = knex({
       client: 'pg',
@@ -68,10 +66,6 @@ describe(`database service object`, function () {
     })
     app.set('db', db)
   })
-
-  //before('cleanup', () => {helpers.cleanTables(db)})
-
-  //afterEach('cleanup', () => {helpers.cleanTables(db)})
 
   before('clean and populate the tables', () => {
     cleanTables(db)
@@ -106,6 +100,7 @@ describe(`database service object`, function () {
     })
   })
 
+  
   describe(`POST /api/database/songs`, () => {
 
     it(`creates a song, responding with 201 and the new score`, function () {
@@ -129,30 +124,5 @@ describe(`database service object`, function () {
         })
     })
   })
-
-  /*describe(`Get /api/database/songs`, () => {
-    context(`Given there are no songs`, () => {
-      before('clean the tables', () => cleanTables(db))
-
-      it(`responds with 200 and empty list of songs`, () => {
-        return supertest(app)
-          .get('/api/database/artists')
-          .expect(200, [])
-      })
-    })
-
-    context(`Given there are no artists`, () => {
-      before('populate', () => {
-        return db
-          .into('artists')
-          .insert(testArtists)
-      })
-
-      it(`responds with 200 and all artists`, () => {
-        return supertest(app)
-          .get('/api/database/artists')
-          .expect(200, serializedArtists)
-      })
-    })
-  })*/
+  
 })
