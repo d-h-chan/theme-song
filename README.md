@@ -1,4 +1,16 @@
-## Api Endpoints:
+# Theme Song
+
+## Summary:
+Theme-Song is an application that will let the user search for songs by their lyric or theme, created for use by the worship leaders at River of Life Church. Lyrics are sourced via the Genius Lyrics API, and users songs are saved into a postgres db
+
+## Link to Live Project
+https://theme-song-app.now.sh/
+
+## Screenshots:
+![Info Screen](https://user-images.githubusercontent.com/55512143/76169301-0ba86380-6134-11ea-988b-266d005fb0aa.png)
+![Game Screen](https://user-images.githubusercontent.com/55512143/76169304-0d722700-6134-11ea-9509-476cbb3d8025.png)
+
+## Api Endpoint Documentation:
 GET /api/database/songs - return list of all songs in the db, or all songs that match query parameters (e.g. http://localhost:8000/api/database/songs?q=worthy)
 
 POST /api/database/songs - insert a list of new songs into the db
@@ -8,6 +20,9 @@ GET /api/database/artists - return list of all artists in db
 GET /api/genius/search - return a list of songs from genius that match the search parameters (uses genius endpoint https://api.genius.com/search?q={parameters})
 
 GET /api/genius/search/:artist_id - returns a list of 30 most popular songs by an artist from genius (uses genius endpoint  https://api.genius.com/artists/${artist_id}/songs?sort=popularity&per_page=30)
+
+### Technology:
+HTML, CSS, Javascript, React, Enzyme, Node, Cors, Dotenv, Express, Helmet, Morgan, Pg, Xss
 
 ## Set up
 
