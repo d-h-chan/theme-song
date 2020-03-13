@@ -15,15 +15,15 @@ geniusRouter
     })
       .then(res => {
         if (!res.ok) {
-          return res.json().then(error => Promise.reject(error))
+          return res.json().then(error => Promise.reject(error));
         }
-        return res.json()
+        return res.json();
       })
       .then(json => {
-        let items = json.response.hits
-        let output = []
+        let items = json.response.hits;
+        let output = [];
         for (let i = 0; i < items.length; i++) {
-          let result = items[i].result
+          let result = items[i].result;
           output.push({
             title: result.title,
             artist: result.primary_artist.name,
@@ -32,7 +32,7 @@ geniusRouter
             artistId: result.primary_artist.id
           });
         }
-        res.send(output)
+        res.send(output);
       })
   })
 
@@ -47,15 +47,15 @@ geniusRouter
     })
       .then(res => {
         if (!res.ok) {
-          return res.json().then(error => Promise.reject(error))
+          return res.json().then(error => Promise.reject(error));
         }
-        return res.json()
+        return res.json();
       })
       .then(json => {
-        let items = json.response.songs
-        let output = []
+        let items = json.response.songs;
+        let output = [];
         for (let i = 0; i < items.length; i++) {
-          let result = items[i]
+          let result = items[i];
           output.push({
             title: result.title,
             artist: result.primary_artist.name,
@@ -64,20 +64,8 @@ geniusRouter
             artistId: result.primary_artist.id
           });
         }
-        res.send(output)
+        res.send(output);
       })
   })
-
-/*fetch('https://genius.com/Jesus-culture-how-he-loves-lyrics')
-    .then(_res => {
-      return (_res.text())
-    })
-    .then(html => {
-      //console.log(html)
-      let soup = new JSSoup(html);
-      let found = soup.find("div", "lyrics").getText()
-      //console.log(processLyrics(found))
-      res.send(processLyrics(found))
-    })*/
 
 module.exports = geniusRouter

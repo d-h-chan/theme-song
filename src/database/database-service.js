@@ -7,31 +7,31 @@ const DatabaseService = {
       .innerJoin('artists', 'songs.artist_id', 'artists.genius_id')
       .where('lyrics', 'like', `%${search}%`)
       .orWhere('themes', 'like', `%${search}%`)
-      .orderBy('title', 'asc')
+      .orderBy('title', 'asc');
   },
   getAllSongs(knex) {
     return knex.select('*')
       .from('songs')
       .innerJoin('artists', 'songs.artist_id', 'artists.genius_id')
-      .orderBy('title', 'asc')
+      .orderBy('title', 'asc');
   },
   insertSong(knex, songs) {
     return knex.insert(songs)
       .into('songs')
       .returning('*')
       .then(rows => {
-        return songs
+        return songs;
       })
       .catch(x => {
         if (!isUniqueViolationError(x)) throw x
-        return songs
+        return songs;
       })
   },
   serializeArtist(artist) {
     return {
       name: artist.artist_name,
       id: artist.genius_id,
-    }
+    };
   },
   serializeSong(song) {
     return {
@@ -39,27 +39,27 @@ const DatabaseService = {
       artist: song.artist_name,
       url: song.song_url,
       themes: xss(song.themes)
-    }
+    };
   },
   getArtists(knex) {
     return knex.select('*')
       .from('artists')
-      .orderBy('artist_name', 'asc')
+      .orderBy('artist_name', 'asc');
   },
   insertArtist(knex, artists) {
     return knex.insert(artists)
       .into('artists')
       .returning('*')
       .then(rows => {
-        return artists
+        return artists;
       })
       .catch(x => {
         if (!isUniqueViolationError(x)) throw x
-        return artists
+        return artists;
       })
   },
 }
 
-module.exports = DatabaseService
+module.exports = DatabaseService;
 
-const isUniqueViolationError = err => err.code === '23505'
+const isUniqueViolationError = err => err.code === '23505';

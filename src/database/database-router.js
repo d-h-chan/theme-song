@@ -15,7 +15,7 @@ function getSongFromResult(result) {
     song_url: result.url,
     themes: result.themes,
     genius_id: result.geniusId,
-  }
+  };
 }
 
 function getArtistFromResult(result) {
@@ -25,68 +25,63 @@ function getArtistFromResult(result) {
   };
 }
 function processLyrics(input) {
-  input = input.toLowerCase().replace(/(\r\n|\n|\r|,)/gm, " ")
-  let inputArr = input.split(' ')
-  let newSet = new Set(inputArr)
-  let output = ""
+  input = input.toLowerCase().replace(/(\r\n|\n|\r|,)/gm, " ");
+  let inputArr = input.split(' ');
+  let newSet = new Set(inputArr);
+  let output = "";
   for (let item of newSet) {
-    output = output.concat(item, " ")
+    output = output.concat(item, " ");
   }
-  return output
+  return output;
 }
 
 function getLyrics(url) {
   return fetch(url)
     .then(_res => {
-      return (_res.text())
+      return (_res.text());
     })
     .then(html => {
       let soup = new JSSoup(html);
-      let found = soup.find("div", "lyrics").getText()
-      let lyrics = processLyrics(found)
-      return lyrics
+      let found = soup.find("div", "lyrics").getText();
+      let lyrics = processLyrics(found);
+      return lyrics;
     })
 }
 
 databaseRouter
   .route('/songs')
   .get((req, res, next) => {
-    const knexInstance = req.app.get('db')
-    let inputStr = req.query.q
+    const knexInstance = req.app.get('db');
+    let inputStr = req.query.q;
     if (inputStr === null || inputStr.match(/^ *$/) !== null) {
       DatabaseService.getAllSongs(knexInstance)
       .then(songs => {
-        res.json(songs.map(DatabaseService.serializeSong))
+        res.json(songs.map(DatabaseService.serializeSong));
       })
-      .catch(next)
+      .catch(next);
     }
     else {
     DatabaseService.getSongs(knexInstance, req.query.q)
       .then(songs => {
-        res.json(songs.map(DatabaseService.serializeSong))
+        res.json(songs.map(DatabaseService.serializeSong));
       })
-      .catch(next)
+      .catch(next);
     }
   })
-  //
   .post(jsonParser, (req, res) => {
-    let results = req.body
-    const knexInstance = req.app.get('db')
-    //res.send(results.map(getArtistFromResults))
-    //    Promise.all(DatabaseService.insertArtists(knexInstance, results.map(getArtistFromResults)))
+    let results = req.body;
+    const knexInstance = req.app.get('db');
     for (const result of results) {
-      const artist = getArtistFromResult(result)
+      const artist = getArtistFromResult(result);
       DatabaseService.insertArtist(knexInstance, artist)
       .then(r => {
-        return getLyrics(result.url)
+        return getLyrics(result.url);
       })
       .then(lyrics => {
-        //console.log(lyrics)
-        const song = getSongFromResult(result)
-        song.lyrics = lyrics
-        DatabaseService.insertSong(knexInstance, song)
+        const song = getSongFromResult(result);
+        song.lyrics = lyrics;
+        DatabaseService.insertSong(knexInstance, song);
       })
-      //DatabaseService.insertSong(knexInstance)
     }
     res
     .status(201)
@@ -96,16 +91,12 @@ databaseRouter
 databaseRouter
   .route('/artists')
   .get((req, res, next) => {
-    const knexInstance = req.app.get('db')
+    const knexInstance = req.app.get('db');
     DatabaseService.getArtists(knexInstance)
       .then(artists => {
-        res.json(artists.map(DatabaseService.serializeArtist))
+        res.json(artists.map(DatabaseService.serializeArtist));
       })
-      .catch(next)
+      .catch(next);
   })
-//get songs(for search page)
-//get artists
-//post songs(to databse)
-//post artists
 
 module.exports = databaseRouter
